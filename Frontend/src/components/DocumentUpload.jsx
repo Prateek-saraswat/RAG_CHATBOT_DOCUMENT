@@ -87,6 +87,9 @@ function DocumentUpload({ onUploadSuccess, onUploadError }) {
   };
 
   const handleUpload = async () => {
+
+    if(uploading) return ;
+
     if (!file) {
       setError('Please select a file first');
       return;
@@ -108,6 +111,9 @@ function DocumentUpload({ onUploadSuccess, onUploadError }) {
       }, 300);
 
       const result = await apiService.uploadDocument(file);
+
+      console.log('UPLOAD API RESPONSE:', result);
+console.log('FILE NAME:', file.name);
       
       clearInterval(progressInterval);
       setProgress(100);
@@ -116,24 +122,28 @@ function DocumentUpload({ onUploadSuccess, onUploadError }) {
       setTimeout(() => {
         setFile(null);
         setSuccess(null);
+          setUploading(false)
         setProgress(0);
+        
         if (fileInputRef.current) {
           fileInputRef.current.value = '';
         }
       }, 2000);
 
       if (onUploadSuccess) {
-        onUploadSuccess(result);
+        onUploadSuccess({
+          ...result,
+          fileName : file.name
+      });
       }
     } catch (err) {
       console.error('Upload error:', err);
       setError(err.response?.data?.error || err.message || 'Failed to upload document');
+        setUploading(false)
       if (onUploadError) {
         onUploadError(err);
       }
-    } finally {
-      setUploading(false);
-    }
+    } 
   };
 
   const removeFile = () => {
@@ -190,7 +200,11 @@ function DocumentUpload({ onUploadSuccess, onUploadError }) {
           onDragLeave={handleDrag}
           onDragOver={handleDrag}
           onDrop={handleDrop}
-          onClick={() => !file && fileInputRef.current?.click()}
+          onClick={() => {
+            if(!file && !uploading){
+              fileInputRef.current?.click()
+            }
+          }}
         >
           <input
             ref={fileInputRef}

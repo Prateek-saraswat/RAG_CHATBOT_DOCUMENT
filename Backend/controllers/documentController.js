@@ -35,6 +35,7 @@ class DocumentController {
         success: true,
         message: 'Document uploaded. Processing started.',
         documentId,
+        filename : originalname,
         status: 'processing'
       });
 

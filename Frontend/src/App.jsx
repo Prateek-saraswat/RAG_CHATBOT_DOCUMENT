@@ -34,6 +34,17 @@ function App() {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+      const checkHealth = async () => {
+    try {
+      const status = await apiService.healthCheck();
+      setHealthStatus({ status: 'healthy', details: status });
+    } catch (error) {
+      setHealthStatus({ 
+        status: 'error', 
+        details: { error: error.message } 
+      });
+    }
+  };
     checkHealth();
     const interval = setInterval(checkHealth, 30000);
     
@@ -54,17 +65,7 @@ function App() {
     };
   }, []);
 
-  const checkHealth = async () => {
-    try {
-      const status = await apiService.healthCheck();
-      setHealthStatus({ status: 'healthy', details: status });
-    } catch (error) {
-      setHealthStatus({ 
-        status: 'error', 
-        details: { error: error.message } 
-      });
-    }
-  };
+
 
   const showNotification = (message, type = 'success') => {
     setNotification({ message, type });
@@ -178,10 +179,11 @@ function App() {
             <div className="logo">
               <div className="logo-icon">
                 <MessageSquare size={28} />
+                <img src="../public/excellence.jpg" width="50px" alt="" />
               </div>
               <div className="logo-text">
-                <h1>DocuMind AI</h1>
-                <p className="tagline">Intelligent Document Assistant</p>
+                <h1>Excellence AI</h1>
+                <p className="tagline">Excellence Document Assistant</p>
               </div>
             </div>
           </div>
@@ -310,11 +312,11 @@ function App() {
           
           <div className="footer-center">
             <span className="copyright">
-              © {new Date().getFullYear()} DocuMind AI • v1.2.0
+              { "2025"} Excellence AI
             </span>
           </div>
           
-          {/* <div className="footer-right">
+          <div className="footer-right">
             <div className="footer-links">
               <button className="btn-text small">
                 <HelpCircle size={14} />
@@ -325,7 +327,7 @@ function App() {
                 <span>Settings</span>
               </button>
             </div>
-          </div> */}
+          </div>
         </div>
       </footer>
     </div>

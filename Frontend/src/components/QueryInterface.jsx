@@ -3,6 +3,7 @@ import apiService from '../services/api';
 import '../styles/QueryInterface.css';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import ConfirmModal from './ConfirmModal';
 import { 
   Send, 
   FileText, 
@@ -41,6 +42,7 @@ function QueryInterface({ selectedDocument }) {
   const textareaRef = useRef(null);
   const messagesEndRef = useRef(null);
   const chatContainerRef = useRef(null);
+  const [showClearModal , setShowClearModal] = useState(false)
 
   useEffect(() => {
     const savedChats = localStorage.getItem('documentChats');
@@ -164,18 +166,19 @@ function QueryInterface({ selectedDocument }) {
     }
   };
 
-  const clearChatHistory = () => {
-    if (window.confirm('Are you sure you want to clear the chat history?')) {
-      setMessages([]);
-      if (selectedDocument) {
-        const savedChats = localStorage.getItem('documentChats');
-        const chats = savedChats ? JSON.parse(savedChats) : {};
-        delete chats[selectedDocument.id];
-        localStorage.setItem('documentChats', JSON.stringify(chats));
-      }
-    }
-  };
+  const confirmClearChat = async (e)=> {
+    setMessages([]);
 
+  if (selectedDocument) {
+    const savedChats = localStorage.getItem('documentChats');
+    const chats = savedChats ? JSON.parse(savedChats) : {};
+    delete chats[selectedDocument.id];
+    localStorage.setItem('documentChats', JSON.stringify(chats));
+  }
+
+  setShowClearModal(false);
+
+  }
   const handleCopy = (messageId, content) => {
     navigator.clipboard.writeText(content);
     setCopiedId(messageId);
@@ -242,7 +245,9 @@ function QueryInterface({ selectedDocument }) {
       <div className="query-header">
         <div className="header-left">
           <div className="header-icon-wrapper">
-            <MessageSquare size={24} />
+            {/* <MessageSquare size={24} /> */}
+                <img src="../public/excellence.jpg" width="50px" alt="" />
+
           </div>
           <div className="header-content">
             <h2>Document Chat</h2>
@@ -266,7 +271,7 @@ function QueryInterface({ selectedDocument }) {
           
           <button 
             className="btn-secondary small"
-            onClick={clearChatHistory}
+            onClick={()=> setShowClearModal(true)}
             disabled={messages.length === 0}
             title="Clear chat history"
           >
@@ -358,7 +363,7 @@ function QueryInterface({ selectedDocument }) {
                       <div className="message-sender">
                         {message.type === 'user' ? 'You' : 
                          message.type === 'error' ? 'Error' : 
-                         'Document AI'}
+                         'Excellence Ai'}
                       </div>
                       <div className="message-time">
                         {formatMessageTime(message.timestamp)}
@@ -506,7 +511,7 @@ function QueryInterface({ selectedDocument }) {
                   </div>
                   <div className="message-content-wrapper">
                     <div className="message-header">
-                      <div className="message-sender">Document AI</div>
+                      <div className="message-sender">Excellence AI</div>
                       <div className="message-time">Now</div>
                     </div>
                     <div className="message-content">
@@ -580,14 +585,21 @@ function QueryInterface({ selectedDocument }) {
         <div className="form-hint">
           <div className="hint-item">
             <Sparkles size={12} />
-            <span>AI-powered document analysis</span>
+            <span>Excellence document analysis</span>
           </div>
           <div className="hint-item">
             <Brain size={12} />
-            <span>Context-aware responses</span>
+            <span></span>
           </div>
         </div>
       </form>
+      <ConfirmModal
+  isOpen={showClearModal}
+  title="Clear chat history?"
+  message="This will permanently delete all messages for this document."
+  onCancel={() => setShowClearModal(false)}
+  onConfirm={confirmClearChat}
+/>
     </div>
   );
 }

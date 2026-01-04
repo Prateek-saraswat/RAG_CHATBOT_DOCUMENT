@@ -14,7 +14,7 @@ async function migrate() {
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    multipleStatements: true, // VERY IMPORTANT
+    multipleStatements: true, 
   });
 
   console.log("Connected to Railway MySQL");

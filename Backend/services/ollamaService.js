@@ -12,6 +12,7 @@ class OllamaService {
   }
 
   async generateResponse(query, contextChunks = []) {
+    console.log(query , contextChunks)
     try {
       const safeContext = this.prepareContext(contextChunks);
       const prompt = this.buildPrompt(query, safeContext);
@@ -50,6 +51,7 @@ class OllamaService {
   }
 
   buildPrompt(query, contextChunks) {
+    console.log(query , contextChunks)
     const hasContext = contextChunks.length > 0;
     const contextText = contextChunks.join('\n\n---\n\n');
 

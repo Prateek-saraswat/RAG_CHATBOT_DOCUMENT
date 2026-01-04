@@ -42,7 +42,7 @@ class PineconeService {
     if (!response.data?.embedding) {
       throw new Error("Invalid embedding response from Ollama");
     }
-
+    console.log(response.data.embedding)
     return response.data.embedding;
   }
 

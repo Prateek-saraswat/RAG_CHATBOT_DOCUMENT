@@ -9,14 +9,12 @@ import {
   Clock, 
   XCircle,
   AlertCircle,
-  Download,
   Eye,
   Filter,
   Search,
   Calendar,
   HardDrive,
   Hash,
-  MoreVertical,
   File,
   ChevronRight,
   Check,
@@ -38,7 +36,6 @@ function DocumentList({ onSelectDocument, selectedDocument, viewMode = 'compact'
     failed: 0,
     totalSize: 0
   });
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(null);
   const [isGridView, setIsGridView] = useState(false);
 
   const fetchDocuments = async () => {
@@ -183,20 +180,20 @@ function DocumentList({ onSelectDocument, selectedDocument, viewMode = 'compact'
     });
   }, [filteredDocuments, sortBy]);
 
-  const handleDownload = async (doc) => {
-    try {
-      const response = await apiService.downloadDocument(doc.id);
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', doc.original_name || 'document');
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-    } catch (err) {
-      console.error('Download error:', err);
-    }
-  };
+  // const handleDownload = async (doc) => {
+  //   try {
+  //     const response = await apiService.downloadDocument(doc.id);
+  //     const url = window.URL.createObjectURL(new Blob([response.data]));
+  //     const link = document.createElement('a');
+  //     link.href = url;
+  //     link.setAttribute('download', doc.original_name || 'document');
+  //     document.body.appendChild(link);
+  //     link.click();
+  //     link.remove();
+  //   } catch (err) {
+  //     console.error('Download error:', err);
+  //   }
+  // };
 
   if (loading && documents.length === 0) {
     return (
@@ -402,30 +399,20 @@ function DocumentList({ onSelectDocument, selectedDocument, viewMode = 'compact'
                     </div>
                     
                     <div className="card-actions">
-                      {doc.status === 'completed' && (
+                      
                         <>
-                          {/* <button
-                            className="btn-icon small"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              // handleDownload(doc);
-                            }}
-                            title="Download"
-                          >
-                            <Download size={14} />
-                          </button> */}
                           <button
-                            className="btn-icon small"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setShowDeleteConfirm(doc.id);
-                            }}
-                            title="Delete"
-                          >
-                            <Trash2 size={14} />
-                          </button>
+    className="btn-icon small"
+    onClick={(e) => {
+      e.stopPropagation();
+      setShowDeleteConfirm(doc.id);
+    }}
+    title="Delete"
+  >
+    <Trash2 size={14} />
+  </button>
                         </>
-                      )}
+                     
                     </div>
                   </div>
                   
