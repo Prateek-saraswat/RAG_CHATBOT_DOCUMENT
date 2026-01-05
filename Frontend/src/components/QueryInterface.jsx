@@ -245,8 +245,8 @@ function QueryInterface({ selectedDocument }) {
       <div className="query-header">
         <div className="header-left">
           <div className="header-icon-wrapper">
-            {/* <MessageSquare size={24} /> */}
-                <img src="/excellence.jpg" width="50px" alt="" />
+            <MessageSquare size={24} />
+                {/* <img src="/excellence.jpg" width="50px" alt="" /> */}
 
           </div>
           <div className="header-content">

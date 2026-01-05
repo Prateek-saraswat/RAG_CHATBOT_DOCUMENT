@@ -36,7 +36,7 @@ function DocumentList({ onSelectDocument, selectedDocument, viewMode = 'compact'
     failed: 0,
     totalSize: 0
   });
-  const [isGridView, setIsGridView] = useState(false);
+  const [isGridView, setIsGridView] = useState(true);
 
   const fetchDocuments = async () => {
     try {
@@ -259,13 +259,13 @@ function DocumentList({ onSelectDocument, selectedDocument, viewMode = 'compact'
           
           {viewMode === 'full' && documents.length > 0 && (
             <div className="view-toggle">
-              <button 
+              {/* <button 
                 className={`view-btn ${!isGridView ? 'active' : ''}`}
                 onClick={() => setIsGridView(false)}
                 title="List view"
               >
                 <span>List</span>
-              </button>
+              </button> */}
               <button 
                 className={`view-btn ${isGridView ? 'active' : ''}`}
                 onClick={() => setIsGridView(true)}

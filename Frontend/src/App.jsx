@@ -179,7 +179,7 @@ function App() {
             <div className="logo">
               <div className="logo-icon">
                 <MessageSquare size={28} />
-                <img src="/excellence.jpg" width="50px" alt="" />
+                {/* <img src="/excellence.jpg" width="50px" alt="" /> */}
               </div>
               <div className="logo-text">
                 <h1>Excellence AI</h1>
