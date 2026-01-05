@@ -251,7 +251,7 @@ console.log('FILE NAME:', file.name);
                   <p>or click to browse</p>
                 </div>
                 <div className="upload-hint">
-                  Supports PDF, DOC, DOCX, TXT, MD, JSON, CSV, XLS, XLSX (Max 50MB)
+                  Supports PDF, DOC, DOCX, TXT, MD, CSV 
                 </div>
               </>
             )}
